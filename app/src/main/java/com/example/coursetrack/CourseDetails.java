@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -29,7 +30,6 @@ public class CourseDetails extends AppCompatActivity {
     CourseDatabaseHelper databaseHelper;
     SQLiteDatabase db;
     TextView nameText, categoryText,ratingText, descriptionText;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,9 +154,12 @@ public class CourseDetails extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId()==R.id.edit_option){
-            onEditClicked();
+        switch(item.getItemId()){
+            case R.id.edit_option:
+                onEditClicked();
+                return true;
+            default:
+                return false;
         }
-        return super.onOptionsItemSelected(item);
     }
 }

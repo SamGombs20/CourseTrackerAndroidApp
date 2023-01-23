@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     return null;
             }
         }
+
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +134,18 @@ public class MainActivity extends AppCompatActivity {
                     try{
                         applyValues(name, category, rating, description);
                         dialog.dismiss();
-                        Toast.makeText(this, "Course added!", Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                        LayoutInflater inflater1 = getLayoutInflater();
+                        View view3 = inflater1.inflate(R.layout.course_added,null);
+                        TextView textView = view3.findViewById(R.id.course_addedText);
+                        textView.setText(name +" added!");
+                        builder1.setView(view3)
+                                .setTitle(R.string.added)
+                                .setPositiveButton(R.string.ok, (dialogInterface, i) -> {
+                                    dialogInterface.dismiss();
+                                });
+                        AlertDialog dialog1 = builder1.create();
+                        dialog1.show();
                     }
                     catch (SQLiteException e){
                         throw new SQLiteException(e.getMessage());
@@ -141,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             });
         });
     }
+
     public void applyValues(String name, String category, int rating, String description){
         courseDatabaseHelper = new CourseDatabaseHelper(this);
         database = courseDatabaseHelper.getWritableDatabase();

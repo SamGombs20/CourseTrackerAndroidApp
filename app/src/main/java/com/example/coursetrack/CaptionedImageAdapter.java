@@ -1,12 +1,15 @@
 package com.example.coursetrack;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 
 public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAdapter.ViewHolder> {
     private ArrayList<String> nameArray;
+
     interface Listener{
         void onClick(int position);
     }
@@ -40,7 +44,8 @@ public class CaptionedImageAdapter extends RecyclerView.Adapter<CaptionedImageAd
         CardView cardView = holder.cardView;
         TextView name = cardView.findViewById(R.id.name);
         name.setText(nameArray.get(position));
-        cardView.setOnClickListener(view -> {
+        ImageView bookImage = cardView.findViewById(R.id.info_image);
+        bookImage.setOnClickListener(view -> {
             if(listener!=null){
                 listener.onClick(position);
             }
